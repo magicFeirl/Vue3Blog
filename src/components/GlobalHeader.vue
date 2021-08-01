@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky z-50 top-0 flex justify-between items-center h-12 bg-white shadow-md mb-4 px-8"
+    class="sticky z-20 top-0 flex justify-between items-center h-12 bg-white shadow-md mb-4 px-8"
   >
     <router-link to="/">极简博客</router-link>
     <div class="flex-grow"></div>
