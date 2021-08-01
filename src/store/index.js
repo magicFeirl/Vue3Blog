@@ -7,7 +7,7 @@ import axios from '@/hooks/useAxios'
 export default createStore({
   state: {
     token: localStorage.getItem('token') || '',
-    isLogin: !(localStorage.getItem('token') in ['', undefined]) || false
+    isLogin: localStorage.getItem('token') || false
   },
   mutations: {
     login(state, token) {
