@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mx-auto left-0 rounded-md right-0 w-1/4 text-center fixed top-5 flex items-center text-white text-sm font-bold px-4 py-3"
+    class="z-50 mx-auto left-0 rounded-md right-0 w-1/4 text-center fixed top-5 flex items-center text-white text-sm font-bold px-4 py-3"
     :class="bgType"
     role="alert"
   >
