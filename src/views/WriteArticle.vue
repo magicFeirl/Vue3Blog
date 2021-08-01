@@ -32,8 +32,11 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import DefinedMarkdown from "@/components/DefinedMarkdown";
-import { fakeArticleList } from "@/fakeDB";
+import useMessageBox from "@/hooks/useMessageBox";
+
+// import qs from "qs";
 
 export default {
   components: {
@@ -45,14 +48,21 @@ export default {
     const preview = ref(false);
 
     const router = useRouter();
+    const store = useStore();
 
     const postArticle = () => {
-      fakeArticleList.push({
-        title: title.value,
-        content: content.value,
-        pubtime: "2021年8月1日12:00:12",
-        id: fakeArticleList.length,
-      });
+      store
+        .dispatch("postArticle", {
+          title: title.value,
+          content: content.value,
+          description: "这是一篇很diao的文章，还不快看！！11",
+        })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(() => {
+          useMessageBox("Create article failed", "error");
+        });
 
       router.push("/");
     };
@@ -67,16 +77,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.edit {
-  @apply w-full outline-none text-lg border-none bg-gray-100 p-2 rounded;
-}
-
-.btn {
-  @apply py-1 px-2 rounded;
-}
-
-.btn-red {
-  @apply hover:bg-red-700 bg-red-500 text-white;
-}
-</style>
+<style scoped></style>

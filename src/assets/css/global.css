@@ -1,9 +1,23 @@
 * {
-  font-family: Arial, 'Microsoft YaHei',Helvetica, sans-serif;
+  font-family: Arial, 'Microsoft YaHei', Helvetica, sans-serif;
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html,
+{
   margin: 0;
   min-height: 100vh;
+}
+
+.edit {
+  @apply w-full outline-none text-lg border-none bg-gray-100 p-2 rounded;
+}
+
+.btn {
+  @apply py-1 px-2 rounded;
+}
+
+.btn-red {
+  @apply hover:bg-red-700 bg-red-500 text-white;
 }

@@ -3,11 +3,11 @@
     <div>
       <h2 class="text-gray-900 font-bold text-xl">{{ article.title }}</h2>
       <div class="text-gray-300 text-sm">
-        {{ article.pubtime }}
+        {{ article.created_at }}
       </div>
     </div>
     <p class="text-gray-600 text-justify line-clamp-3 w-full">
-      {{ article.content }}
+      {{ article.description }}
     </p>
     <router-link
       :to="`/article/${article.id}`"
@@ -28,4 +28,3 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>

@@ -30,7 +30,7 @@
     <!-- 文章列表卡片 -->
     <div class="grid grid-cols-1 gap-y-4 px-10">
       <article-card
-        v-for="article in fakeData"
+        v-for="article in articles"
         :key="article.id"
         :article="article"
       ></article-card>
@@ -40,15 +40,33 @@
 
 <script>
 import ArticleCard from "@/components/ArticleCard";
-import { fakeArticleList } from "@/fakeDB";
+import { useStore } from "vuex";
+import { ref } from "vue";
+import useMessageBox from "@/hooks/useMessageBox";
 
 export default {
   components: {
     ArticleCard,
   },
   setup() {
+    const store = useStore();
+    const articles = ref([]);
+
+    const getAllArticles = () => {
+      store
+        .dispatch("getAllArticles")
+        .then(({ data }) => {
+          articles.value = data.data;
+        })
+        .catch(() => {
+          useMessageBox("获取文章列表出错", "error");
+        });
+    };
+
+    getAllArticles();
+
     return {
-      fakeData: fakeArticleList,
+      articles,
     };
   },
 };
