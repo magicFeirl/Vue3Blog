@@ -5,9 +5,13 @@
 
 body,
 html,
-{
+  {
   margin: 0;
   min-height: 100vh;
+}
+
+a {
+  @apply hover:text-blue-500;
 }
 
 .edit {
@@ -15,9 +19,13 @@ html,
 }
 
 .btn {
-  @apply py-1 px-2 rounded;
+  @apply py-1 px-2 rounded hover:text-white;
 }
 
 .btn-red {
-  @apply hover:bg-red-700 bg-red-500 text-white;
+  @apply hover:bg-red-700 bg-red-500 text-white cursor-pointer;
+}
+
+.btn-blue {
+  @apply hover:bg-red-700 bg-blue-500 text-white cursor-pointer;
 }

@@ -41,7 +41,7 @@
 <script>
 import ArticleCard from "@/components/ArticleCard";
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import useMessageBox from "@/hooks/useMessageBox";
 
 export default {
@@ -56,14 +56,17 @@ export default {
       store
         .dispatch("getAllArticles")
         .then(({ data }) => {
-          articles.value = data.data;
+          // 倒序显示（新文章先显示）
+          articles.value = data.data.reverse();
         })
         .catch(() => {
           useMessageBox("获取文章列表出错", "error");
         });
     };
 
-    getAllArticles();
+    onMounted(() => {
+      getAllArticles();
+    });
 
     return {
       articles,

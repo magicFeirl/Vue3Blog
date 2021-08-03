@@ -22,12 +22,22 @@ export default createStore({
     }
   },
   actions: {
+    async deleteArticle(context, id) {
+      return await axios.delete('/article', {
+        params: {
+          id
+        }
+      })
+    },
     async getArticle(context, id) {
       return await axios.get('/article', {
         params: {
           id
         }
       })
+    },
+    async updateArticle(context, payload) {
+      return await axios.put(`/article?id=${payload.id}`, payload.formData)
     },
     async getAllArticles() {
       return await axios.get('/articles')

@@ -20,6 +20,9 @@ const routes = [{
   {
     path: '/edit',
     component: () => import('@/views/WriteArticle.vue'),
+    props: (route) => ({
+      id: route.query.id
+    }),
     meta: {
       requiredLogin: true
     }
