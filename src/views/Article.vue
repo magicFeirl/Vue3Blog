@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto prose" v-if="!!data">
+  <div class="container mx-auto prose" v-if="loaded">
     <!-- 标题 -->
     <h1>{{ data.title }}</h1>
     <!-- 文章信息区域 -->
@@ -66,10 +66,13 @@ export default {
       tags: [],
     });
 
+    const loaded = ref(false);
+
     api
       .getArticle(props.id)
       .then(({ data: _data }) => {
         data.value = _data.data;
+        loaded.value = true;
       })
       .catch(() => {
         useMessageBox("请求文章出错", "error");
@@ -103,6 +106,7 @@ export default {
       data,
       show,
       deleteArticle,
+      loaded,
     };
   },
 };
