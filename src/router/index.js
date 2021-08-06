@@ -12,14 +12,14 @@ const routes = [{
   },
   {
     path: '/article/:id',
-    component: () => import('@/components/Article'),
+    component: () => import('@/views/Article'),
     props: (route) => ({
       id: Number(route.params.id)
     })
   },
   {
     path: '/edit',
-    component: () => import('@/views/WriteArticle.vue'),
+    component: () => import('@/views/WriteArticle'),
     props: (route) => ({
       id: route.query.id
     }),
@@ -30,6 +30,11 @@ const routes = [{
   {
     path: '/login',
     component: () => import('@/views/login.vue')
+  },
+  {
+    path: '/tag/:id',
+    component: () => import('@/views/TagArticle.vue'),
+    props: true
   }
 ]
 

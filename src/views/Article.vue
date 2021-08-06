@@ -1,20 +1,27 @@
 <template>
   <div class="container mx-auto prose" v-if="!!data">
+    <!-- 标题 -->
     <h1>{{ data.title }}</h1>
+    <!-- 文章信息区域 -->
     <div class="flex justify-between">
-      <div></div>
-      <div class="flex-grow"></div>
+      <!-- tag -->
       <div class="flex space-x-2">
-        <router-link
-          :to="`/edit?id=${data.id}`"
-          class="second-text cursor-pointer"
+        <tag class="text-sm " v-for="tag in data.tags" :key="tag.tag_id">
+          <router-link :to="`/tag/${tag.tag_id}`">{{
+            tag.tag_name
+          }}</router-link>
+        </tag>
+      </div>
+      <div class="flex-grow"></div>
+      <!-- 编辑、删除文章操作 -->
+      <div class="flex space-x-2">
+        <router-link :to="`/edit?id=${data.id}`" class="second-text"
           >编辑文章</router-link
         >
-        <span @click="show = true" to="/" class="second-text cursor-pointer"
-          >删除文章</span
-        >
+        <span @click="show = true" to="/" class="second-text">删除文章</span>
       </div>
     </div>
+    <!-- 文章内容 md 渲染 -->
     <DefinedMarkdown :source="data.content"></DefinedMarkdown>
   </div>
 
@@ -31,16 +38,19 @@
 
 <script>
 import DefinedMarkdown from "@/components/DefinedMarkdown";
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import Dialog from "@/components/Dialog";
+import Tag from "@/components/Tag";
 import useMessageBox from "@/hooks/useMessageBox";
+
+import api from "@/api/article";
 
 export default {
   components: {
     Dialog,
     DefinedMarkdown,
+    Tag,
   },
   props: {
     id: {
@@ -49,15 +59,15 @@ export default {
     },
   },
   setup(props) {
-    const store = useStore();
     const data = ref({
       title: "",
       content: "",
       id: "",
+      tags: [],
     });
 
-    store
-      .dispatch("getArticle", props.id)
+    api
+      .getArticle(props.id)
       .then(({ data: _data }) => {
         data.value = _data.data;
       })
@@ -69,8 +79,8 @@ export default {
     const router = useRouter();
 
     const deleteArticle = () => {
-      store
-        .dispatch("deleteArticle", data.value.id)
+      api
+        .deleteArticle(data.value.id)
         .then(() => {
           useMessageBox("删除文章成功");
         })
@@ -80,6 +90,14 @@ export default {
 
       router.replace("/");
     };
+
+    const getArticleTags = () => {
+      api.getArticleTags(props.id).then(({ data: _data }) => {
+        data.value.tags = _data.data;
+      });
+    };
+
+    getArticleTags();
 
     return {
       data,
@@ -92,6 +110,6 @@ export default {
 
 <style scoped>
 .second-text {
-  @apply text-gray-500 text-sm underline hover:text-black;
+  @apply text-gray-500 text-sm underline hover:text-black cursor-pointer;
 }
 </style>

@@ -6,13 +6,15 @@
       <h1 class="text-lg font-bold text-black">登录到极简博客</h1>
       <ValidationInput
         placeholder="用户名"
-        class="edit w-3/4"
+        class="edit w-full"
         v-model="username"
+        :rules="[{ message: '请输入用户名', type: 'required' }]"
       />
       <ValidationInput
         placeholder="密码"
-        class="edit w-3/4"
+        class="edit w-full"
         v-model="password"
+        :rules="[{ message: '请输入密码', type: 'required' }]"
       />
       <button class="btn btn-red w-20" @click.prevent="login">登录</button>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4">
+  <div>
     <input
       v-if="type === 'input'"
       v-bind="$attrs"
@@ -19,7 +19,7 @@
       @blur="validate"
       v-else
     />
-    <div class="h-5 mt-2 text-sm text-red-600">
+    <div class="mt-2 text-sm text-red-600">
       <span v-if="error.error">{{ error.message }}</span>
     </div>
   </div>
@@ -53,7 +53,7 @@ export default {
   emits: ["update:ModelValue"],
   setup(props, context) {
     const val = ref(props.modelValue || "");
-    
+
     const emitVModel = () => {
       context.emit("update:ModelValue", val.value);
     };
@@ -79,7 +79,7 @@ export default {
         return true;
       });
 
-      error.error = not_passed;
+      error.error = props.rules.length !== 0 && not_passed;
     };
 
     return {
